@@ -11,7 +11,9 @@ stage('Build')
 {
 steps
 {
-sh "mvn clean"
+  withMaven(maven: 'mvn') {
+            sh "mvn clean package"
+        }
 }
 }
 
@@ -19,7 +21,9 @@ stage('Test')
 {
 steps
 {
-sh "mvn compile"
+  withMaven(maven: 'mvn') {
+            sh "mvn compile"
+        }
 }
 }
 
@@ -27,7 +31,9 @@ stage('Deploy')
 {
 steps
 {
-sh "mvn package"
+  withMaven(maven: 'mvn') {
+            sh "mvn package"
+        }
 }
 }
 
