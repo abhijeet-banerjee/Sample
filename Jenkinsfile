@@ -11,7 +11,7 @@ stage('Build')
 {
 steps
 {
-sh "${mvnHome}/bin/mvn clean"
+sh "mvn clean"
 }
 }
 
@@ -19,7 +19,7 @@ stage('Test')
 {
 steps
 {
-sh "${mvnHome}/bin/mvn compile"
+sh "mvn compile"
 }
 }
 
@@ -27,7 +27,7 @@ stage('Deploy')
 {
 steps
 {
-sh "${mvnHome}/bin/mvn package"
+sh "mvn package"
 }
 }
 
