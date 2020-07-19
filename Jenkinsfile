@@ -11,7 +11,7 @@ stage('Build')
 {
 steps
 {
-bat "mvn clean"
+sh "mvn clean"
 }
 }
 
@@ -19,7 +19,7 @@ stage('Test')
 {
 steps
 {
-bat "mvn compile"
+sh "mvn compile"
 }
 }
 
@@ -27,7 +27,7 @@ stage('Deploy')
 {
 steps
 {
-bat "mvn package"
+sh "mvn package"
 }
 }
 
