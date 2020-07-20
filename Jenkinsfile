@@ -1,15 +1,13 @@
 pipeline {
   environment {
+            def dockerHome = tool 'myDocker'
+        env.PATH = "${dockerHome}/bin:${env.PATH}"
     registry = "abhijeet7963/testapp"
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
   agent any
   stages {
-     stage('Initialize'){
-        def dockerHome = tool 'myDocker'
-        env.PATH = "${dockerHome}/bin:${env.PATH}"
-    }
     stage('Cloning Git') {
       steps {
         git 'https://github.com/abhijeet-banerjee/Sample.git'
