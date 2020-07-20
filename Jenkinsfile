@@ -1,40 +1,23 @@
 pipeline {
-  environment {
-            def dockerHome = tool 'myDocker'
-        PATH = "${dockerHome}/bin:${env.PATH}"
-    registry = "abhijeet7963/testapp"
-    registryCredential = 'dockerhub'
-    dockerImage = ''
-  }
+  
   agent any
   stages {
-    stage('Cloning Git') {
-      steps {
-        git 'https://github.com/abhijeet-banerjee/Sample.git'
+    
+    stage('Building') {
+      steps{
+sh "mvn clean package"
       }
     }
-    stage('Building image') {
+    
+    stage('Test') {
       steps{
-        script {
-        sh "mvn clean package"
-        sh "mvn compile"
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
+sh "mvn compile"
       }
     }
-    stage('Deploy Image') {
+    
+    stage('Deploy') {
       steps{
-        script {
-          sh "mvn package"
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
-    stage('Remove Unused docker image') {
-      steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+        sh "mvn package"
       }
     }
   }
