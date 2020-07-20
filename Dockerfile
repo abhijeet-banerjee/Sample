@@ -2,7 +2,7 @@ pipeline {
 environment {
 registry = "https://hub.docker.com/repository/docker/abhijeet7963/testapp"
 registryCredential = 'dockerhub_id'
-dockerImage = ''
+dockerImage = 'myim'
 }
 agent any
 stages {
