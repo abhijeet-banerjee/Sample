@@ -1,7 +1,7 @@
 pipeline {
   environment {
             def dockerHome = tool 'myDocker'
-        env.PATH = "${dockerHome}/bin:${env.PATH}"
+        PATH = "${dockerHome}/bin:${env.PATH}"
     registry = "abhijeet7963/testapp"
     registryCredential = 'dockerhub'
     dockerImage = ''
