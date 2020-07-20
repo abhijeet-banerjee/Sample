@@ -1,42 +1,44 @@
-pipeline
-{
-agent any
-tools
-{
-maven "Maven 3.3.9"
-}
-stages
-{
-stage('Build')
-{
-steps
-{
- sh "mvn clean package"
-}
-}
-
-stage('Test')
-{
-steps
-{
-sh "mvn compile"
-
-}
-}
-
-stage('Deploy')
-{
-steps
-{
-  sh "mvn package"
-
-}
-}
-
-}                      // stages end here.
+pipeline {
+  environment {
+    registry = "abhijeet7963/testapp"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
+  agent any
+  stages {
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/abhijeet-banerjee/Sample.git'
+      }
+    }
+    stage('Building image') {
+      steps{
+        script {
+        sh "mvn clean package"
+        sh "mvn compile"
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+        script {
+          sh "mvn package"
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+    }
+  }
   
- // post operation performed
-  post
+  
+    post
   {
     cleanup
     {
@@ -50,5 +52,4 @@ steps
       }
     }
   }
-  
 }
