@@ -1,6 +1,6 @@
 pipeline {
 environment {
-registry = "abhijeet7963/testapp:1.1"
+registry = "https://hub.docker.com/repository/docker/abhijeet7963/testapp"
 registryCredential = 'dockerhub_id'
 dockerImage = ''
 }
