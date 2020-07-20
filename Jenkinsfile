@@ -6,6 +6,10 @@ pipeline {
   }
   agent any
   stages {
+     stage('Initialize'){
+        def dockerHome = tool 'myDocker'
+        env.PATH = "${dockerHome}/bin:${env.PATH}"
+    }
     stage('Cloning Git') {
       steps {
         git 'https://github.com/abhijeet-banerjee/Sample.git'
